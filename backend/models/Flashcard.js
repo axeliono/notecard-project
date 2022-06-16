@@ -18,12 +18,6 @@ const flashcardSchema = new Schema(
       default: Date.now,
       get: (timestamp) => dateFormat(timestamp),
     },
-    deck: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Deck',
-      },
-    ],
   },
   {
     toJSON: {
