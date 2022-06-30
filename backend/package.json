@@ -7,7 +7,7 @@
     "test": "jest --runInBand ./models",
     "start": "node server.js",
     "watch": "nodemon",
-    "seed": "node seeders/seeds.js"
+    "seed": "node seeds/seeds.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +21,8 @@
     "mongoose": "^6.3.8"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "graphql-faker": "^2.0.0-rc.25",
     "nodemon": "^2.0.16"
   }
 }

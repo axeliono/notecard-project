@@ -3,10 +3,9 @@ const models = require('./models/index');
 const { typeDefs, resolvers } = require('./schemas');
 
 const { ApolloServer } = require('apollo-server-express');
-const connectDB = require('./config/connection');
+const db = require('./config/connection');
 
 const PORT = process.env.PORT || 4000;
-connectDB();
 async function startApolloServer() {
   const app = express();
 
@@ -24,4 +23,6 @@ async function startApolloServer() {
   });
 }
 
-startApolloServer();
+db.once('open', () => {
+  startApolloServer();
+});
