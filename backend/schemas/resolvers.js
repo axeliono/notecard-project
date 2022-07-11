@@ -3,7 +3,7 @@ const { Deck, Flashcard, User } = require('../models');
 const resolvers = {
   Query: {
     decks: async (parent, args) => {
-      return Deck.find();
+      return await Deck.find().populate('flashcard');
     },
 
     deck: async (parent, args) => {
@@ -21,12 +21,12 @@ const resolvers = {
     userDecks: async (parent, args) => {
       return await User.findOne({
         username: args.username,
-      })
-        .populate({
-          path: 'decks',
-          select: '-__v',
-        })
-        .select('-__v');
+      }).populate({
+        path: 'decks',
+        populate: {
+          path: 'Flashcard',
+        },
+      });
     },
 
     flashcards: async (parent, args) => {

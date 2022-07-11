@@ -9,53 +9,31 @@ db.once('open', async () => {
   await Flashcard.deleteMany({});
 
   // create user data
-  const userData = [];
-
-  for (let i = 0; i < 10; i += 1) {
-    const username = faker.internet.userName();
-    const email = faker.internet.email(username);
-    const password = faker.internet.password();
-
-    await User.collection.insertOne(new User({ username, email, password }));
-  }
-
-  //create flashcard data
-  const flashcardData = [];
-  for (let i = 0; i < 10; i++) {
-    const title = faker.music.songName();
-    const cardBody = faker.lorem.lines();
-    await Flashcard.collection.insertOne(new Flashcard({ title, cardBody }));
-  }
-
-  //create Deck data
   const deckData = [];
   for (let i = 0; i < 3; i++) {
+    const username = faker.internet.userName();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+
     const deckName = faker.music.songName();
-    const cardBody = faker.lorem.lines();
-    const cardList = [];
+    const decks = await Deck.create({ deckName, deckCards: [] });
     for (let i = 0; i < 2; i++) {
       const title = faker.music.songName();
-      const cardBody = faker.lorem.lines();
-      const card = new Flashcard({ title, cardBody });
-      cardList.push({ title, cardBody });
+      const cardBody = faker.lorem.lines(1);
+      const card = await Flashcard.create({ title, cardBody });
+
+      await Deck.updateOne(
+        { _id: decks._id },
+        { $push: { deckCards: card._id } }
+      );
     }
 
-    const deck = await Deck.collection.insertOne(new Deck({ deckName, cardBody, cardList }));
-    deckData.push(deck);
-
+    const user = await User.create({ username, email, password, decks: [] });
+    console.log(user);
+    await User.updateOne({ _id: user._id }, { $push: { decks: decks._id } });
+    console.log(user);
   }
 
-  
-
   console.log('all done!');
-  Deck.find({}).then((decks) => {
-    console.log(decks);
-  });
-  User.find({}).then((decks) => {
-    console.log(decks);
-  });
-  Flashcard.find({}).then((decks) => {
-    console.log(decks);
-  });
   process.exit(0);
 });
