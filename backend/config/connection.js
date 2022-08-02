@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/flashhaven', {
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/flashhaven',
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-});
+  },
+  (err) => {
+    if (err) {
+      console.error('Connection to DB failed');
+    } else {
+      console.log('Connection to DB successful');
+    }
+  }
+);
+
 
 module.exports = mongoose.connection;
