@@ -5,17 +5,9 @@ const typeDefs = gql`
         me: User
         users: [User]
         user(username: String!): User
-        userDecks(username: String): User
-        decks: [Deck]
+        decks(username: String): [Deck]
         deck(_id: ID!): Deck
-        flashcards: [Flashcard]
     }
-
-    # type Mutation {
-    #     # addUser(username: String!, email: String!, password: String!): User
-    #     # addDeck(deckName: String!, deckCards: [Flashcard]!): Deck
-    #     # createFlashcard(title: String!, cardBody: String!): Flashcard
-    # }
 
     type User {
         _id: ID
