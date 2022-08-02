@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const flashcardSchema = require('../models/Flashcard');
 
 const deckSchema = new Schema(
   {
@@ -11,8 +10,8 @@ const deckSchema = new Schema(
     deckCards: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Flashcard'
-      }
+        ref: 'Flashcard',
+      },
     ],
     createdAt: {
       type: Date,
