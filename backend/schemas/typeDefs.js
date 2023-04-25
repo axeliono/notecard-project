@@ -11,11 +11,11 @@ const typeDefs = gql`
         flashcards: [Flashcard]
     }
 
-    # type Mutation {
-    #     # addUser(username: String!, email: String!, password: String!): User
-    #     # addDeck(deckName: String!, deckCards: [Flashcard]!): Deck
-    #     # createFlashcard(title: String!, cardBody: String!): Flashcard
-    # }
+    type Mutation {
+        addUser(username: String!, email: String!, password: String!): User
+        addDeck(deckName: String!, deckCards: [Flashcard]!): Deck
+        createFlashcard(title: String!, cardBody: String!): Flashcard
+    }
 
     type User {
         _id: ID

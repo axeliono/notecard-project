@@ -1,18 +1,18 @@
 const { connectDB, db } = require('../../config/connection');
 const { Flashcard } = require('../../models');
-const { flashcardFind } = require("../module_methods")
+// const { flashcardFind } = require('../module_methods');
 
-describe('Test flashcard functionality', () => {
+describe('Test flashcard functionality', async () => {
   beforeAll(() => connectDB());
 
-  // beforeEach(async () => {
-  //   const flashcard = new Flashcard({
-  //     title: 'test title',
-  //     cardBody: 'card body for the test flashcard',
-  //   });
-  //   const savedCard = await flashcard.save();
-  //   return { savedCard: savedCard, flashcard: flashcard };
-  // });
+  beforeEach(async () => {
+    const flashcard = new Flashcard({
+      title: 'test title',
+      cardBody: 'card body for the test flashcard',
+    });
+    const savedCard = await flashcard.save();
+    return { savedCard: savedCard, flashcard: flashcard };
+  });
 
   afterEach(() => {
     Flashcard.deleteMany();
@@ -22,7 +22,7 @@ describe('Test flashcard functionality', () => {
     db.close(done);
   });
 
-  it('creates a new flashcard', async () => {
+  test('creates a new flashcard', async () => {
     const flashcard = new Flashcard({
       title: 'test title',
       cardBody: 'card body for the test flashcard',
@@ -33,12 +33,12 @@ describe('Test flashcard functionality', () => {
     expect(savedCard.title).toBe(flashcard.title);
   });
 
-  it('pulls a flashcard saved to the database', () => {
+  test('pulls a flashcard saved to the database', async () => {
     const flashcard = new Flashcard({
       title: 'test title',
       cardBody: 'card body for the test flashcard',
     });
     const savedCard = await flashcard.save();
-    expect(flashcard.flashcardFind()).toBeDefined();
+    expect(savedCard.Find()).toBeDefined();
   });
 });
